@@ -1,0 +1,5 @@
+{
+  "name": "Mighty Blade - Mesa do Mestre",
+  "description": "Uma ferramenta completa para mestres de Mighty Blade, com narrativa auxiliada por IA, consulta de regras em PDF e gerenciamento de bases de dados de monstros e itens.",
+  "requestFramePermissions": []
+}
