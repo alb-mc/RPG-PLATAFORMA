@@ -143,12 +143,15 @@ const RulesBrowser: React.FC<RulesBrowserProps> = ({
   }, [selectedBookId]);
 
   const pdfViewerUrl = useMemo(() => {
-    const zoomValue = isCompactScreen ? 67 : 125;
+    const zoomValue = isCompactScreen ? 100 : 125;
 
     const hashParams: string[] = [
-      'pagemode=none',
-      `zoom=${zoomValue}`,
       `page=${selectedPage}`,
+      `zoom=${zoomValue}`,
+      'pagemode=none',
+      'toolbar=1',
+      'navpanes=0',
+      'scrollbar=1',
     ];
 
     return `${selectedBook.fileUrl}#${hashParams.join('&')}`;
@@ -244,13 +247,46 @@ const RulesBrowser: React.FC<RulesBrowserProps> = ({
         </aside>
 
         <section className="-mx-3 lg:col-span-3 lg:mx-0">
-          <div className="parchment min-h-[calc(100vh-96px)] overflow-hidden rounded-md lg:min-h-[820px] lg:rounded-lg">
-            <iframe
-              key={`${selectedBook.id}-${selectedPage}-${viewerKey}-${isCompactScreen ? 'mobile' : 'desktop'}`}
-              src={pdfViewerUrl}
-              title={`Visualizador do PDF ${selectedBook.name}`}
-              className="h-[calc(100vh-96px)] min-h-[720px] w-full border-0 bg-white lg:h-[820px]"
-            />
+          <div className="parchment overflow-hidden rounded-md p-3 lg:rounded-lg lg:p-4">
+            <div className="mb-3 flex flex-col gap-2 md:hidden">
+              <p className="text-xs italic opacity-70">
+                Em celulares, o leitor nativo do navegador costuma funcionar
+                melhor que PDF embutido na página.
+              </p>
+
+              <a
+                href={pdfViewerUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="dark-red-bg rounded border border-[#c5a059] px-4 py-3 text-center medieval-font text-base text-[#f4e4bc] shadow transition-all hover:brightness-110"
+              >
+                Abrir PDF em tela cheia
+              </a>
+            </div>
+
+            <div className="hidden overflow-hidden rounded border-2 border-[#8b6b40] bg-white md:block md:h-[calc(100vh-220px)] lg:h-[820px]">
+              <iframe
+                key={`${selectedBook.id}-${selectedPage}-${viewerKey}-${isCompactScreen ? 'mobile' : 'desktop'}`}
+                src={pdfViewerUrl}
+                title={`Visualizador do PDF ${selectedBook.name}`}
+                className="block h-full w-full border-0 bg-white"
+              />
+            </div>
+
+            <div className="rounded border border-dashed border-[#8b6b40] bg-black/10 p-4 text-center md:hidden">
+              <p className="medieval-font text-lg text-[#5a0a0a]">
+                {selectedBook.shortName}
+              </p>
+
+              <p className="mt-2 text-xs opacity-70">
+                Página selecionada: {selectedPage}
+              </p>
+
+              <p className="mt-3 text-xs opacity-70">
+                Toque no botão acima para abrir o PDF e rolar normalmente pelo
+                conteúdo.
+              </p>
+            </div>
           </div>
         </section>
       </div>
