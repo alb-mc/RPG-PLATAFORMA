@@ -25,6 +25,14 @@ async function ensureAuthenticatedUser() {
   return data.user;
 }
 
+async function ensureAuthenticatedUserIfNeeded(collection: RpgCollection) {
+  if (collection === 'players') {
+    return null;
+  }
+
+  return ensureAuthenticatedUser();
+}
+
 function getIsHiddenFromPayload(payload: any): boolean {
   return Boolean(payload?.oculto || payload?.isHidden || payload?.is_hidden);
 }
@@ -60,7 +68,7 @@ export async function upsertRpgRecord<T extends { id: string }>(
   collection: RpgCollection,
   payload: T,
 ): Promise<T> {
-  await ensureAuthenticatedUser();
+  await ensureAuthenticatedUserIfNeeded(collection);
 
   const normalizedPayload = normalizePayload(payload);
 
@@ -89,12 +97,16 @@ export async function upsertRpgRecord<T extends { id: string }>(
   return (data as RpgRecordRow<T>).payload;
 }
 
-export async function deleteRpgRecord(id: string): Promise<void> {
-  await ensureAuthenticatedUser();
+export async function deleteRpgRecord(
+  collection: RpgCollection,
+  id: string,
+): Promise<void> {
+  await ensureAuthenticatedUserIfNeeded(collection);
 
   const { error } = await supabase
     .from('rpg_records')
     .delete()
+    .eq('collection', collection)
     .eq('id', id);
 
   if (error) {

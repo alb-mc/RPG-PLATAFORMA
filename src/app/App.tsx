@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+﻿import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Sidebar from '../components/Sidebar';
 import Dashboard from '../components/pages/Dashboard';
@@ -13,7 +13,9 @@ import PlayerSheets, {
 
 import { supabase } from '../services/supabaseClient';
 import {
+  deleteRpgRecord,
   listRpgRecords,
+  upsertRpgRecord,
   replaceRpgCollection,
   type RpgCollection,
 } from '../services/rpgRecordsService';
@@ -37,7 +39,7 @@ const App: React.FC = () => {
 
   const [maps, setMaps] = useState<MapData[]>([]);
   const [pdfs, setPdfs] = useState<RulePDF[]>([]);
-  const [narrativeTone, setNarrativeTone] = useState<string>('épico');
+  const [narrativeTone, setNarrativeTone] = useState<string>('├®pico');
 
   const [isLoadingRpgRecords, setIsLoadingRpgRecords] = useState(true);
 
@@ -77,7 +79,7 @@ const App: React.FC = () => {
       console.error('Erro ao carregar registros do Supabase:', error);
 
       window.alert(
-        'Não foi possível carregar dados do Supabase. Verifique conexão, políticas RLS e autenticação.',
+        'N├úo foi poss├¡vel carregar dados do Supabase. Verifique conex├úo, pol├¡ticas RLS e autentica├º├úo.',
       );
     } finally {
       setIsLoadingRpgRecords(false);
@@ -115,7 +117,7 @@ const App: React.FC = () => {
     ) => {
       try {
         await replaceRpgCollection(collection, data);
-        console.log('Coleção salva no Supabase:', collection, data);
+        console.log('Cole├º├úo salva no Supabase:', collection, data);
       } catch (error) {
         console.error('Erro ao salvar no Supabase:', error);
 
@@ -127,7 +129,7 @@ const App: React.FC = () => {
         const alertMessage =
           readableError === 'Entre no modo mestre para salvar no Supabase.'
             ? readableError
-            : `Não foi possível salvar no Supabase: ${readableError}`;
+            : `N├úo foi poss├¡vel salvar no Supabase: ${readableError}`;
 
         window.alert(alertMessage);
         throw error;
@@ -135,6 +137,47 @@ const App: React.FC = () => {
     },
     [],
   );
+
+  const savePlayer = useCallback(async (player: PlayerSheet) => {
+    try {
+      const savedPlayer = await upsertRpgRecord('players', player);
+
+      console.log('Coleção salva no Supabase:', 'players', savedPlayer);
+
+      setPlayers((currentPlayers) => {
+        const exists = currentPlayers.some(
+          (currentPlayer) => currentPlayer.id === savedPlayer.id,
+        );
+
+        return exists
+          ? currentPlayers.map((currentPlayer) =>
+              currentPlayer.id === savedPlayer.id ? savedPlayer : currentPlayer,
+            )
+          : [...currentPlayers, savedPlayer];
+      });
+    } catch (error) {
+      console.error('Erro ao salvar no Supabase:', error);
+      window.alert('Não foi possível salvar a ficha no Supabase.');
+      throw error;
+    }
+  }, []);
+
+  const deletePlayer = useCallback(async (playerId: string) => {
+    try {
+      await deleteRpgRecord('players', playerId);
+
+      console.log('Coleção salva no Supabase:', 'players', playerId);
+
+      setPlayers((currentPlayers) =>
+        currentPlayers.filter((currentPlayer) => currentPlayer.id !== playerId),
+      );
+    } catch (error) {
+      console.error('Erro ao excluir no Supabase:', error);
+
+      window.alert('Não foi possível excluir a ficha no Supabase.');
+      throw error;
+    }
+  }, []);
 
   function createSyncedSetter<T extends { id: string }>(
     collection: RpgCollection,
@@ -177,15 +220,6 @@ const App: React.FC = () => {
       createSyncedSetter<Shop>(
         'shops',
         setShops,
-      ),
-    [saveCollectionToSupabase],
-  );
-
-  const syncedSetPlayers = useMemo(
-    () =>
-      createSyncedSetter<PlayerSheet>(
-        'players',
-        setPlayers,
       ),
     [saveCollectionToSupabase],
   );
@@ -270,7 +304,8 @@ const App: React.FC = () => {
         return (
           <PlayerSheets
             players={players}
-            setPlayers={syncedSetPlayers}
+            onSavePlayer={savePlayer}
+            onDeletePlayer={deletePlayer}
           />
         );
 
