@@ -2,10 +2,8 @@
 
 import Sidebar from '../components/Sidebar';
 import Dashboard from '../components/pages/Dashboard';
-import NarratorChat from '../components/pages/NarratorChat';
 import RulesBrowser from '../components/pages/RulesBrowser';
 import DatabaseManager from '../components/pages/DatabaseManager';
-import MapSystem from '../components/pages/MapSystem';
 import PlayerSheets, {
   DEFAULT_PLAYER_SHEETS,
   type PlayerSheet,
@@ -252,6 +250,50 @@ const App: React.FC = () => {
     );
   };
 
+  const renderMaintenanceNotice = (title: string, rune: string) => {
+    return (
+      <div className="animate-fadeIn">
+        <div className="parchment rounded-lg border-4 border-[#8b6b40] p-8 shadow-2xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-4 text-5xl">{rune}</p>
+
+            <h2 className="cinzel mb-4 text-4xl font-bold text-[#c5a059]">
+              {title}
+            </h2>
+
+            <p className="medieval-font text-2xl text-red-900">
+              As runas desta câmara estão em restauração pelo Conselho Arcano.
+            </p>
+
+            <p className="mt-4 text-sm italic opacity-80">
+              Uma bruma antiga cobre este caminho. Retorne ao santuário do mestre
+              quando os selos forem reativados.
+            </p>
+
+            <div className="mt-8 rounded border border-dashed border-[#8b6b40] bg-black/10 p-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-[#8b6b40]">
+                Sinal dos escribas
+              </p>
+
+              <p className="mt-2 text-sm text-[#5a0a0a]">
+                Esta seção repousa sob manutenção mística. Nenhum feitiço foi
+                quebrado; apenas adormecido.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setActiveSection('dashboard')}
+              className="dark-red-bg mt-8 px-6 py-3 rounded medieval-font text-lg text-[#f4e4bc]"
+            >
+              Voltar ao Escudo do Mestre
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderSection = () => {
     if (isLoadingRpgRecords) {
       return renderLoadingState();
@@ -262,13 +304,7 @@ const App: React.FC = () => {
         return renderDashboard();
 
       case 'narrator':
-        return (
-          <NarratorChat
-            pdfs={pdfs}
-            tone={narrativeTone}
-            setTone={setNarrativeTone}
-          />
-        );
+        return renderMaintenanceNotice('Sussurros do Narrador', '🔮');
 
       case 'rules':
         return <RulesBrowser pdfs={pdfs} setPdfs={setPdfs} />;
@@ -310,7 +346,7 @@ const App: React.FC = () => {
         );
 
       case 'maps':
-        return <MapSystem maps={maps} setMaps={setMaps} />;
+        return renderMaintenanceNotice('Cartografia de Mapas', '🧭');
 
       default:
         return renderDashboard();
