@@ -44,6 +44,11 @@ const MENU_ITEMS: MenuItem[] = [
     icon: '🏚',
   },
   {
+    id: 'players',
+    label: 'Jogadores',
+    icon: '🧙',
+  },
+  {
     id: 'maps',
     label: 'Atlas',
     icon: '🗺',

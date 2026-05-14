@@ -1,5 +1,5 @@
 
-export type Section = 'dashboard' | 'narrator' | 'rules' | 'monsters' | 'items' | 'shops' | 'maps';
+export type Section = 'dashboard' | 'narrator' | 'rules' | 'monsters' | 'items' | 'shops' | 'maps' | 'players';
 
 export interface AttributeStats {
   forca: number;
