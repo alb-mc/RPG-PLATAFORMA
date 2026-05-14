@@ -63,7 +63,7 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
     classe: 'Arqueiro',
     experiencia: 0,
     nivel: 1,
-    motivacao: 'Proteger a floresta e rastrear amea├ºas antes que cheguem ao grupo.',
+    motivacao: 'Proteger a floresta e rastrear ameaças antes que cheguem ao grupo.',
     vida: 20,
     mana: 10,
     forca: 2,
@@ -87,7 +87,7 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
       {
         arma: 'Arco curto',
         dano: 'Agi+2',
-        tipo: 'Perfura├º├úo',
+        tipo: 'Perfuração',
       },
     ],
     equipamentos: [
@@ -97,14 +97,14 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
         custo: '10',
       },
     ],
-    simbolo: '­ƒÅ╣',
-    descricao: 'Especialista em ataques ├á dist├óncia, rastreamento e emboscadas.',
+    simbolo: '🏹',
+    descricao: 'Especialista em ataques à distância, rastreamento e emboscadas.',
   },
   {
     id: 'default-warrior',
     personagem: 'Borin',
     jogador: '',
-    raca: 'An├úo',
+    raca: 'Anão',
     classe: 'Guerreiro',
     experiencia: 0,
     nivel: 1,
@@ -124,8 +124,8 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
     habilidades: [
       {
         nome: 'Postura Defensiva',
-        dificuldade: 'ÔÇö',
-        mana: 'ÔÇö',
+        dificuldade: '—',
+        mana: '—',
       },
     ],
     ataques: [
@@ -142,7 +142,7 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
         custo: '25',
       },
     ],
-    simbolo: '­ƒøí´©Å',
+    simbolo: '🛡️',
     descricao: 'Combatente resistente, ideal para proteger o grupo e segurar inimigos.',
   },
   {
@@ -177,7 +177,7 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
       {
         arma: 'Adaga',
         dano: 'Agi+1',
-        tipo: 'Perfura├º├úo',
+        tipo: 'Perfuração',
       },
     ],
     equipamentos: [
@@ -187,8 +187,8 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
         custo: '30',
       },
     ],
-    simbolo: '­ƒùí´©Å',
-    descricao: '├ügil, furtivo e perigoso quando ataca de surpresa.',
+    simbolo: '🗡️',
+    descricao: 'Ágil, furtivo e perigoso quando ataca de surpresa.',
   },
   {
     id: 'default-mage',
@@ -198,7 +198,7 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
     classe: 'Mago',
     experiencia: 0,
     nivel: 1,
-    motivacao: 'Compreender for├ºas arcanas antigas e controlar a magia com precis├úo.',
+    motivacao: 'Compreender forças arcanas antigas e controlar a magia com precisão.',
     vida: 14,
     mana: 30,
     forca: 1,
@@ -213,7 +213,7 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
     determinacao: 13,
     habilidades: [
       {
-        nome: 'Proj├®til Arcano',
+        nome: 'Projétil Arcano',
         dificuldade: '10',
         mana: '3',
       },
@@ -222,17 +222,17 @@ export const DEFAULT_PLAYER_SHEETS: PlayerSheet[] = [
       {
         arma: 'Cajado',
         dano: 'For+1',
-        tipo: 'Contus├úo',
+        tipo: 'Contusão',
       },
     ],
     equipamentos: [
       {
-        item: 'Grim├│rio',
+        item: 'Grimório',
         peso: '1',
         custo: '50',
       },
     ],
-    simbolo: '­ƒö«',
+    simbolo: '🔮',
     descricao: 'Conjuradora focada em magia, conhecimento e controle de campo.',
   },
 ];
@@ -285,16 +285,16 @@ const emptyPlayerSheet: PlayerSheet = {
     },
   ],
 
-  simbolo: '­ƒæñ',
+  simbolo: '👤',
   descricao: '',
 };
 
 const classDescriptions: Record<PlayerClass, string> = {
-  Arqueiro: 'Especialista em combate ├á dist├óncia, percep├º├úo e posicionamento.',
-  Guerreiro: 'Linha de frente resistente, focado em for├ºa, defesa e combate direto.',
-  Ladino: '├ügil, furtivo e eficiente em emboscadas, truques e infiltra├º├úo.',
-  Mago: 'Usu├írio de magia, conhecimento e habilidades arcanas.',
-  Outro: 'Personagem personalizado com fun├º├úo definida pela campanha.',
+  Arqueiro: 'Especialista em combate à distância, percepção e posicionamento.',
+  Guerreiro: 'Linha de frente resistente, focado em força, defesa e combate direto.',
+  Ladino: 'Ágil, furtivo e eficiente em emboscadas, truques e infiltração.',
+  Mago: 'Usuário de magia, conhecimento e habilidades arcanas.',
+  Outro: 'Personagem personalizado com função definida pela campanha.',
 };
 
 interface PlayerSheetsProps {
@@ -394,17 +394,17 @@ const PlayerSheets: React.FC<PlayerSheetsProps> = ({
     }
 
     if (form.nivel < 1) {
-      setFormError('O n├¡vel precisa ser no m├¡nimo 1.');
+      setFormError('O nível precisa ser no mínimo 1.');
       return;
     }
 
     if (form.vida < 1) {
-      setFormError('A vida precisa ser no m├¡nimo 1.');
+      setFormError('A vida precisa ser no mínimo 1.');
       return;
     }
 
     if (form.mana < 0) {
-      setFormError('A mana n├úo pode ser negativa.');
+      setFormError('A mana não pode ser negativa.');
       return;
     }
 
@@ -493,6 +493,12 @@ const PlayerSheets: React.FC<PlayerSheetsProps> = ({
         ))}
       </section>
 
+      {formError && !isModalOpen && (
+        <div className="rounded border border-red-900 bg-red-900/10 p-3 text-sm text-red-900 font-bold">
+          {formError}
+        </div>
+      )}
+
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <div
@@ -505,7 +511,7 @@ const PlayerSheets: React.FC<PlayerSheetsProps> = ({
               className="absolute top-3 right-3 text-red-900 text-xl font-bold opacity-70 hover:opacity-100"
               aria-label="Fechar"
             >
-              ├ù
+              ×
             </button>
 
             <h3 className="cinzel text-3xl font-bold mb-6 border-b-2 border-[#8b6b40] text-red-900">
@@ -531,7 +537,7 @@ const PlayerSheets: React.FC<PlayerSheetsProps> = ({
 
               <div>
                 <label className="block text-sm font-bold uppercase mb-1">
-                  Descri├º├úo / Anota├º├Áes:
+                  Descrição / Anotações:
                 </label>
 
                 <textarea
@@ -543,7 +549,7 @@ const PlayerSheets: React.FC<PlayerSheetsProps> = ({
                     }))
                   }
                   className="w-full bg-white/50 border border-[#8b6b40] p-3 rounded h-28 focus:outline-none"
-                  placeholder="Hist├│ria, apar├¬ncia, comportamento, v├¡nculos ou anota├º├Áes importantes."
+                  placeholder="História, aparência, comportamento, vínculos ou anotações importantes."
                 />
               </div>
 
@@ -558,7 +564,7 @@ const PlayerSheets: React.FC<PlayerSheetsProps> = ({
                   type="button"
                   onClick={closeModal}
                   disabled={isSaving || isDeleting}
-                  className="px-4 py-2 opacity-50 hover:opacity-100"
+                  className="px-4 py-2 opacity-50 hover:opacity-100 disabled:cursor-not-allowed"
                 >
                   Cancelar
                 </button>
@@ -566,7 +572,7 @@ const PlayerSheets: React.FC<PlayerSheetsProps> = ({
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="dark-red-bg text-[#f4e4bc] px-6 py-2 rounded medieval-font text-lg"
+                  className="dark-red-bg text-[#f4e4bc] px-6 py-2 rounded medieval-font text-lg disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {isSaving ? 'Salvando...' : 'Salvar Ficha'}
                 </button>
@@ -611,10 +617,10 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
             </h3>
 
             <p className="truncate text-sm opacity-75">
-              {player.raca || 'Ra├ºa indefinida'} ÔÇó {player.classe}
+              {player.raca || 'Raça indefinida'} • {player.classe}
             </p>
 
-            <p className="text-xs opacity-60">N├¡vel {player.nivel}</p>
+            <p className="text-xs opacity-60">Nível {player.nivel}</p>
           </div>
         </div>
       </div>
@@ -629,7 +635,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <span>Vida: {player.vida}</span>
         <span>Mana: {player.mana}</span>
 
-        <span>For├ºa: {player.forca}</span>
+        <span>Força: {player.forca}</span>
         <span>Agilidade: {player.agilidade}</span>
 
         <span>Int: {player.inteligencia}</span>
@@ -642,11 +648,11 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
       <div className="mb-4 min-h-[54px]">
         {motivationText ? (
           <p className="text-xs leading-5">
-            <strong>Motiva├º├úo:</strong> {createPreviewText(motivationText, 90)}
+            <strong>Motivação:</strong> {createPreviewText(motivationText, 90)}
           </p>
         ) : (
           <p className="text-xs italic opacity-50">
-            Sem motiva├º├úo cadastrada.
+            Sem motivação cadastrada.
           </p>
         )}
       </div>
@@ -655,7 +661,8 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <button
           type="button"
           onClick={onEdit}
-          className="rounded border border-[#8b6b40] px-3 py-2 text-sm font-bold transition hover:bg-black/10"
+          disabled={isDeleting}
+          className="rounded border border-[#8b6b40] px-3 py-2 text-sm font-bold transition hover:bg-black/10 disabled:cursor-not-allowed disabled:opacity-60"
         >
           Editar
         </button>
@@ -664,7 +671,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           type="button"
           onClick={onDelete}
           disabled={isDeleting}
-          className="rounded bg-red-900 px-3 py-2 text-sm font-bold text-[#f4e4bc] transition hover:bg-red-950"
+          className="rounded bg-red-900 px-3 py-2 text-sm font-bold text-[#f4e4bc] transition hover:bg-red-950 disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isDeleting ? 'Removendo...' : 'Remover'}
         </button>
@@ -712,7 +719,7 @@ const PlayerIdentitySection: React.FC<FormSectionProps> = ({ form, setForm }) =>
         />
 
         <TextField
-          label="Ra├ºa"
+          label="Raça"
           value={form.raca}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -720,7 +727,7 @@ const PlayerIdentitySection: React.FC<FormSectionProps> = ({ form, setForm }) =>
               raca: value,
             }))
           }
-          placeholder="Humano, Elfo, An├úo..."
+          placeholder="Humano, Elfo, Anão..."
         />
 
         <div>
@@ -752,7 +759,7 @@ const PlayerIdentitySection: React.FC<FormSectionProps> = ({ form, setForm }) =>
         </div>
 
         <NumberField
-          label="Experi├¬ncia"
+          label="Experiência"
           value={form.experiencia}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -763,7 +770,7 @@ const PlayerIdentitySection: React.FC<FormSectionProps> = ({ form, setForm }) =>
         />
 
         <NumberField
-          label="N├¡vel"
+          label="Nível"
           value={form.nivel}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -774,7 +781,7 @@ const PlayerIdentitySection: React.FC<FormSectionProps> = ({ form, setForm }) =>
         />
 
         <TextField
-          label="Desenho / S├¡mbolo"
+          label="Desenho / Símbolo"
           value={form.simbolo}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -782,11 +789,11 @@ const PlayerIdentitySection: React.FC<FormSectionProps> = ({ form, setForm }) =>
               simbolo: value,
             }))
           }
-          placeholder="­ƒÅ╣, ­ƒøí´©Å, ­ƒùí´©Å, ­ƒö«..."
+          placeholder="🏹, 🛡️, 🗡️, 🔮..."
         />
 
         <TextField
-          label="Motiva├º├úo"
+          label="Motivação"
           value={form.motivacao}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -847,7 +854,7 @@ const PlayerAttributesSection: React.FC<FormSectionProps> = ({
 
       <div className="grid grid-cols-2 gap-4">
         <NumberField
-          label="For├ºa"
+          label="Força"
           value={form.forca}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -869,7 +876,7 @@ const PlayerAttributesSection: React.FC<FormSectionProps> = ({
         />
 
         <NumberField
-          label="Intelig├¬ncia"
+          label="Inteligência"
           value={form.inteligencia}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -925,7 +932,7 @@ const PlayerDefenseSection: React.FC<FormSectionProps> = ({ form, setForm }) => 
         />
 
         <NumberField
-          label="Determina├º├úo"
+          label="Determinação"
           value={form.determinacao}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -948,7 +955,7 @@ const PlayerLoadSection: React.FC<FormSectionProps> = ({ form, setForm }) => {
 
       <div className="grid grid-cols-3 gap-4">
         <NumberField
-          label="B├ísica"
+          label="Básica"
           value={form.cargaBasica}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -970,7 +977,7 @@ const PlayerLoadSection: React.FC<FormSectionProps> = ({ form, setForm }) => {
         />
 
         <NumberField
-          label="M├íxima"
+          label="Máxima"
           value={form.cargaMaxima}
           onChange={(value) =>
             setForm((currentForm) => ({
@@ -1083,14 +1090,14 @@ const PlayerAbilitiesSection: React.FC<FormSectionProps> = ({
                 onChange={(value) =>
                   updateAbility(index, 'dificuldade', value)
                 }
-                placeholder="10, 12, ÔÇö"
+                placeholder="10, 12, —"
               />
 
               <TextField
                 label="Mana"
                 value={ability.mana}
                 onChange={(value) => updateAbility(index, 'mana', value)}
-                placeholder="2, 5, ÔÇö"
+                placeholder="2, 5, —"
               />
             </div>
           </div>
@@ -1201,7 +1208,7 @@ const PlayerAttacksSection: React.FC<FormSectionProps> = ({ form, setForm }) => 
                 label="Tipo"
                 value={attack.tipo}
                 onChange={(value) => updateAttack(index, 'tipo', value)}
-                placeholder="Corte, perfura├º├úo..."
+                placeholder="Corte, perfuração..."
               />
             </div>
           </div>
@@ -1428,15 +1435,15 @@ function clonePlayer(player: PlayerSheet): PlayerSheet {
 function getDefaultClassIcon(playerClass: PlayerClass) {
   switch (playerClass) {
     case 'Arqueiro':
-      return '­ƒÅ╣';
+      return '🏹';
     case 'Guerreiro':
-      return '­ƒøí´©Å';
+      return '🛡️';
     case 'Ladino':
-      return '­ƒùí´©Å';
+      return '🗡️';
     case 'Mago':
-      return '­ƒö«';
+      return '🔮';
     default:
-      return '­ƒæñ';
+      return '👤';
   }
 }
 
