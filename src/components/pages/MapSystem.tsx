@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { MapData, MapMarker } from '../types';
+import { MapData, MapMarker } from '../../types/types';
 
 interface MapSystemProps {
   maps: MapData[];

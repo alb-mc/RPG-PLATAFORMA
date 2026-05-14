@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Monster, Item, MapData, Section } from '../types';
+import { Monster, Item, MapData, Section } from '../../types/types';
 
 interface DashboardProps {
   monsters: Monster[];
